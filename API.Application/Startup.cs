@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using API.Domain.Interfaces.Services.User;
+using API.Service.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -27,7 +29,8 @@ namespace application
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+            services.AddTransient<IUserService, UserService>();
+            services.AddControllers();            
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "application", Version = "v1" });
