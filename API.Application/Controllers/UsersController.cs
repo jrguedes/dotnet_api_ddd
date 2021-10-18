@@ -12,7 +12,7 @@ namespace API.Application.Controllers
     {
         private readonly IUserService _service;
 
-        public UsersController(IUserService service)
+        public UsersController(IUserService service)        
         {
             _service = service;
         }
@@ -20,8 +20,8 @@ namespace API.Application.Controllers
         public async Task<ActionResult> Get()
         {
             try
-            {
-                return Ok(await _service.GetAllAsync());
+            {                
+                return Ok(await _service.GetAllAsync());                
             }
             catch (ArgumentException e)
             {

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using API.CrossCutting.DependencyInjection;
 using API.Domain.Interfaces.Services.User;
 using API.Service.Services;
 using Microsoft.AspNetCore.Builder;
@@ -27,9 +28,8 @@ namespace application
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {
-
-            services.AddTransient<IUserService, UserService>();
+        {            
+            ConfigureDIServices.ConfigureDI(services);
             services.AddControllers();            
             services.AddSwaggerGen(c =>
             {
