@@ -61,6 +61,58 @@ namespace API.Application.Controllers
             }
         }
 
+        [HttpPut]
+        public async Task<ActionResult> Put([FromBody] UserEntity user)
+        {
+            try
+            {
+                 var result = await _service.PutAsync(user);
+                 if (result != null){                     
+                     return Ok(result);
+                 }
+                 return  BadRequest();
+            }
+            catch (ArgumentException e)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
+
+        [HttpPatch]
+        public async Task<ActionResult> Patch([FromBody] UserEntity user)
+        {
+            //verificar esta implementação
+            await Task.Delay(500);
+            return NoContent();
+            /*
+            try
+            {
+                 var result = await _service.PutAsync(user);
+                 if (result != null){                     
+                     return Ok(result);
+                 }
+                 return  BadRequest();
+            }
+            catch (ArgumentException e)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
+            }
+            */
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(Guid id)
+        {
+            try
+            {
+                return Ok(await _service.DeleteAsync(id));
+            }
+            catch (ArgumentException e)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
+
 
     }
 }

@@ -14,7 +14,7 @@ namespace API.Domain.Interfaces.Services.User
 
          Task<UserEntity> PostAsync(UserEntity user);
 
-         Task<UserEntity> PutAsync(UserEntity user);
+         Task<UserEntity> PutAsync(UserEntity user);         
 
          Task<bool> DeleteAsync(Guid id);
     }
