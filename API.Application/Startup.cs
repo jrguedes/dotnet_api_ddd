@@ -33,7 +33,22 @@ namespace application
             services.AddControllers();            
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "application", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { 
+                    Version = "v1", 
+                    Title = "API DDD DotNet 5", 
+                    Description = "Arquitetura DDD em Dotnet",
+                    TermsOfService = new Uri("http://www.google.com"),
+                    Contact = new OpenApiContact{
+                        Name = "Junior Guedes",
+                        Email = "jrguedes.ja@gmail.com",
+                        Url = new Uri("http://www.google.com")
+                    },
+                    License = new OpenApiLicense
+                    {
+                        Name = "Termo de Licença de Uso",
+                        Url = new Uri("http://www.google.com/minhalicenca")
+                    }                    
+                });
             });
         }
 
@@ -44,7 +59,7 @@ namespace application
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "application v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API DDD v1"));
             }
 
             app.UseHttpsRedirection();
