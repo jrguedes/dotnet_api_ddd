@@ -1,7 +1,7 @@
 using API.Data.DatabaseContext;
 using API.Data.Repositories;
-using API.Domain.Interfaces;
 using API.Domain.Interfaces.Services.User;
+using API.Domain.Interfaces.Repositories;
 using API.Service.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;

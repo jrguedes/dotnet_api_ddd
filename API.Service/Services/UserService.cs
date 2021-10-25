@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.Domain.Entities;
-using API.Domain.Interfaces;
+using API.Domain.Interfaces.Repositories;
 using API.Domain.Interfaces.Services.User;
 
 namespace API.Service.Services
