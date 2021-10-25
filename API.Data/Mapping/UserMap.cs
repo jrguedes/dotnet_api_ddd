@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace API.Data.Mapping
 {
-    public class UserMap : IEntityTypeConfiguration<UserEntity>
+    public class UserMap : IEntityTypeConfiguration<User>
     {
-        public void Configure(EntityTypeBuilder<UserEntity> builder)
+        public void Configure(EntityTypeBuilder<User> builder)
         {
             builder.ToTable("User");
             builder.HasKey(u => u.Id);

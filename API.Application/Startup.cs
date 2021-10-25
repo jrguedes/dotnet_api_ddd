@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.CrossCutting.DependencyInjection;
-using API.Domain.Interfaces.Services.User;
+using API.Domain.Interfaces.Services;
 using API.Service.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

@@ -2,7 +2,7 @@ using System;
 using System.Net;
 using System.Threading.Tasks;
 using API.Domain.Entities;
-using API.Domain.Interfaces.Services.User;
+using API.Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Application.Controllers
@@ -44,7 +44,7 @@ namespace API.Application.Controllers
         }
 
         [HttpPost]
-        public  async Task<ActionResult> Post([FromBody] UserEntity user)
+        public  async Task<ActionResult> Post([FromBody] User user)
         {
             try
             {
@@ -62,7 +62,7 @@ namespace API.Application.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult> Put([FromBody] UserEntity user)
+        public async Task<ActionResult> Put([FromBody] User user)
         {
             try
             {
@@ -79,7 +79,7 @@ namespace API.Application.Controllers
         }
 
         [HttpPatch]
-        public async Task<ActionResult> Patch([FromBody] UserEntity user)
+        public async Task<ActionResult> Patch([FromBody] User user)
         {
             //verificar esta implementação
             await Task.Delay(500);

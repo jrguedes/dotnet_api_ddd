@@ -19,7 +19,7 @@ namespace API.Application.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<object>> Login([FromBody] UserEntity user)
+        public async Task<ActionResult<object>> Login([FromBody] User user)
         {
             try
             {

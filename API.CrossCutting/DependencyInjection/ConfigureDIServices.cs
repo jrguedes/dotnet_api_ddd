@@ -1,11 +1,10 @@
 using API.Data.DatabaseContext;
 using API.Data.Repositories;
-using API.Domain.Interfaces.Services.User;
+using API.Domain.Interfaces.Services;
 using API.Domain.Interfaces.Repositories;
 using API.Service.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using API.Domain.Interfaces.Repositories;
 using API.Domain.Interfaces.Services.Login;
 
 namespace API.CrossCutting.DependencyInjection
