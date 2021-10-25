@@ -14,9 +14,12 @@ namespace API.Service.Services
             _repository = repository;
         }
         
-        public Task<object> FindByLogin(UserEntity user)
-        {
-            throw new System.NotImplementedException();
+        public async Task<object> FindByLogin(UserEntity user)
+        {            
+            if (user != null && !string.IsNullOrWhiteSpace(user.Email)){
+                return await _repository.FindByLogin(user.Email);
+            }
+            return null;
         }
     }
 }

@@ -5,6 +5,8 @@ using API.Domain.Interfaces.Repositories;
 using API.Service.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using API.Domain.Interfaces.Repositories;
+using API.Domain.Interfaces.Services.Login;
 
 namespace API.CrossCutting.DependencyInjection
 {
@@ -18,7 +20,9 @@ namespace API.CrossCutting.DependencyInjection
             );
 
             services.AddScoped(typeof(IRepository<>), typeof(BaseRepository<>));
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<ILoginService, LoginService>();                        
         }
     }
 }
