@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using API.Domain.Entities;
+using API.Domain.Dtos;
 using API.Domain.Interfaces.Repositories;
 using API.Domain.Interfaces.Services.Login;
 
@@ -14,10 +14,10 @@ namespace API.Service.Services
             _repository = repository;
         }
         
-        public async Task<object> FindByLogin(User user)
+        public async Task<object> FindByLogin(LoginDto login)
         {            
-            if (user != null && !string.IsNullOrWhiteSpace(user.Email)){
-                return await _repository.FindByLogin(user.Email);
+            if (login != null && !string.IsNullOrWhiteSpace(login.Email)){
+                return await _repository.FindByLogin(login.Email);
             }
             return null;
         }

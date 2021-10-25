@@ -1,7 +1,7 @@
 using System;
 using System.Net;
 using System.Threading.Tasks;
-using API.Domain.Entities;
+using API.Domain.Dtos;
 using API.Domain.Interfaces.Services.Login;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,11 +19,11 @@ namespace API.Application.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<object>> Login([FromBody] User user)
+        public async Task<ActionResult<object>> Login([FromBody] LoginDto login)
         {
             try
             {
-                var result = await _service.FindByLogin(user);
+                var result = await _service.FindByLogin(login);
                 if (result != null)
                 {
                     return Ok(result);
