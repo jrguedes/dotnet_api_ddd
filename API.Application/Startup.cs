@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.CrossCutting.DependencyInjection;
 using API.Domain.Interfaces.Services;
+using API.Domain.Security;
 using API.Service.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -13,6 +15,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 
 namespace application
@@ -29,7 +32,24 @@ namespace application
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {            
-            ConfigureDIServices.ConfigureDI(services);
+            ConfigureDIServices.ConfigureDI(services, Configuration);
+            
+            var signingConfiguration = new SigningConfiguration();
+            services.AddSingleton(signingConfiguration);
+
+            var tokenConfiguration = new TokenConfiguration();
+            new ConfigureFromConfigurationOptions<TokenConfiguration>(
+                Configuration.GetSection("TokenConfiguration")
+            ).Configure(tokenConfiguration);
+
+            services.AddSingleton(tokenConfiguration);
+            
+            services.AddAuthentication(authOptions => {
+                authOptions.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                authOptions.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            });
+            
+                        
             services.AddControllers();            
             services.AddSwaggerGen(c =>
             {
