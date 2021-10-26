@@ -7,6 +7,7 @@ using API.Domain.Interfaces.Services;
 using API.Domain.Security;
 using API.Service.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -31,9 +32,9 @@ namespace application
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {            
+        {
             ConfigureDIServices.ConfigureDI(services, Configuration);
-            
+
             var signingConfiguration = new SigningConfiguration();
             services.AddSingleton(signingConfiguration);
 
@@ -43,22 +44,44 @@ namespace application
             ).Configure(tokenConfiguration);
 
             services.AddSingleton(tokenConfiguration);
-            
-            services.AddAuthentication(authOptions => {
+
+            services.AddAuthentication(authOptions =>
+            {
                 authOptions.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 authOptions.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(bearerOptions =>
+            {
+                var paramsValidation = bearerOptions.TokenValidationParameters;
+                paramsValidation.IssuerSigningKey = signingConfiguration.Key;
+                paramsValidation.ValidAudience = tokenConfiguration.Audience;
+                paramsValidation.ValidIssuer = tokenConfiguration.Issuer;
+                paramsValidation.ValidateIssuerSigningKey = true;
+                paramsValidation.ValidateLifetime = true;
+                paramsValidation.ClockSkew = TimeSpan.Zero; //tolerancia
             });
-            
-                        
-            services.AddControllers();            
+
+            services.AddAuthorization(auth =>
+            {
+                auth.AddPolicy("Bearer",
+                    new AuthorizationPolicyBuilder()
+                    .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
+                    .RequireAuthenticatedUser()
+                    .Build()
+                );
+            });
+
+
+            services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { 
-                    Version = "v1", 
-                    Title = "API DDD DotNet 5", 
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "API DDD DotNet 5",
                     Description = "Arquitetura DDD em Dotnet",
                     TermsOfService = new Uri("http://www.google.com"),
-                    Contact = new OpenApiContact{
+                    Contact = new OpenApiContact
+                    {
                         Name = "Junior Guedes",
                         Email = "jrguedes.ja@gmail.com",
                         Url = new Uri("http://www.google.com")
@@ -67,7 +90,7 @@ namespace application
                     {
                         Name = "Termo de Licença de Uso",
                         Url = new Uri("http://www.google.com/minhalicenca")
-                    }                    
+                    }
                 });
             });
         }

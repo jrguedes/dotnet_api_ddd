@@ -3,6 +3,7 @@ using System.Net;
 using System.Threading.Tasks;
 using API.Domain.Dtos;
 using API.Domain.Interfaces.Services.Login;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Application.Controllers
@@ -19,6 +20,7 @@ namespace API.Application.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<ActionResult<object>> Login([FromBody] LoginDto login)
         {
             try

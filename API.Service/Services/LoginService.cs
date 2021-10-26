@@ -4,6 +4,7 @@ using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading.Tasks;
 using API.Domain.Dtos;
+using API.Domain.Entities;
 using API.Domain.Interfaces.Repositories;
 using API.Domain.Interfaces.Services.Login;
 using API.Domain.Security;
@@ -39,6 +40,7 @@ namespace API.Service.Services
                         new[]{
                             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                             new Claim(JwtRegisteredClaimNames.UniqueName, user.Email),
+                            new Claim("name", user.Name)
                         }
                     );
                     DateTime createDate = DateTime.UtcNow;
@@ -47,7 +49,7 @@ namespace API.Service.Services
 
                     string token = CreateToken(identity, createDate, expirationDate, handler);
                     
-                    return SuccessObject(createDate, expirationDate, token, login);
+                    return SuccessObject(createDate, expirationDate, token, user);
                 }
             }
 
@@ -76,7 +78,7 @@ namespace API.Service.Services
             return token;
         }
 
-        private object SuccessObject(DateTime createDate, DateTime expirationDate, string token, LoginDto login)
+        private object SuccessObject(DateTime createDate, DateTime expirationDate, string token, User user)
         {
             return new
             {
@@ -84,7 +86,8 @@ namespace API.Service.Services
                 created = createDate.ToString("yyyy-MM-dd HH:mm:ss"),
                 expirationDate = createDate.ToString("yyyy-MM-dd HH:mm:ss"),
                 acessToken = token,
-                userName = login.Email,
+                userName = user.Email,
+                name = user.Name,
                 message = "Usuário logado com sucesso"
             };
         }
