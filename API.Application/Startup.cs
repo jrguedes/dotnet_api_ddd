@@ -60,6 +60,7 @@ namespace application
                 paramsValidation.ClockSkew = TimeSpan.Zero; //tolerancia
             });
 
+            /*
             services.AddAuthorization(auth =>
             {
                 auth.AddPolicy("Bearer",
@@ -68,7 +69,15 @@ namespace application
                     .RequireAuthenticatedUser()
                     .Build()
                 );
+
+                auth.AddPolicy("Adm",
+                    new AuthorizationPolicyBuilder()
+                    .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
+                    .RequireAuthenticatedUser()
+                    .Build()
+                );
             });
+            */
 
 
             services.AddControllers();
@@ -109,6 +118,7 @@ namespace application
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

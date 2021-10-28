@@ -19,7 +19,7 @@ namespace API.Application.Controllers
             _service = service;
         }
         [HttpGet]
-        [Authorize("Bearer")]
+        [Authorize(Roles = "Manager")]
         public async Task<ActionResult> Get()
         {
             try
@@ -33,7 +33,7 @@ namespace API.Application.Controllers
         }
         
         [HttpGet("{id}", Name = "GetById")]
-        [Authorize("Bearer")]                
+        [Authorize(Roles = "Manager,Employee")]
         public async Task<ActionResult> Get(Guid id)
         {
             try
@@ -47,7 +47,7 @@ namespace API.Application.Controllers
         }
 
         [HttpPost]
-        [Authorize("Bearer")]
+        [Authorize(Roles = "Manager")]
         public  async Task<ActionResult> Post([FromBody] User user)
         {
             try
@@ -66,7 +66,7 @@ namespace API.Application.Controllers
         }
 
         [HttpPut]
-        [Authorize("Bearer")]
+        [Authorize(Roles = "Manager")]
         public async Task<ActionResult> Put([FromBody] User user)
         {
             try
@@ -84,7 +84,7 @@ namespace API.Application.Controllers
         }
 
         [HttpPatch]
-        [Authorize("Bearer")]
+        [Authorize(Roles = "Manager,Employee")]
         public async Task<ActionResult> Patch([FromBody] User user)
         {
             //verificar esta implementação
@@ -107,7 +107,7 @@ namespace API.Application.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize("Bearer")]
+        [Authorize(Roles = "Manager")]
         public async Task<ActionResult> Delete(Guid id)
         {
             try

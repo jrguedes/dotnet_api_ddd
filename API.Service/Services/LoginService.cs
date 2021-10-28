@@ -40,7 +40,8 @@ namespace API.Service.Services
                         new[]{
                             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                             new Claim(JwtRegisteredClaimNames.UniqueName, user.Email),
-                            new Claim("name", user.Name)
+                            new Claim(ClaimTypes.Name, user.Name),
+                            new Claim(ClaimTypes.Role,user.Role)
                         }
                     );
                     DateTime createDate = DateTime.UtcNow;
