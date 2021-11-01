@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.CrossCutting.DependencyInjection;
 using API.CrossCutting.Mappings;
+using API.Data.DatabaseContext;
 using API.Domain.Interfaces.Services;
 using API.Domain.Security;
 using API.Service.Services;
@@ -14,6 +15,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -158,6 +160,20 @@ namespace application
             {
                 endpoints.MapControllers();
             });
+
+            //CONFIGURAÇÃO PARA APLICAR A MIGRATION NA PRIMEIRA EXECUCAO
+            //APÓS A PRIMEIRA EXECUÇÃO DA API, ALTERAR A VARIAVEL DE AMBIENTE MIGRATION PARA 'NOTAPPLY'
+            if (Environment.GetEnvironmentVariable("MIGRATION").ToLower() == "APPLY".ToLower())
+            {
+               using(var service = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>()
+               .CreateScope())
+               {
+                 using(var context = service.ServiceProvider.GetService<DataContext>())  
+                 {
+                     context.Database.Migrate();
+                 }
+               }
+            }
         }
     }
 }
