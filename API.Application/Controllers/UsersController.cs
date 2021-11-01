@@ -1,7 +1,7 @@
 using System;
 using System.Net;
 using System.Threading.Tasks;
-using API.Domain.Entities;
+using API.Domain.Dtos.User;
 using API.Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -48,7 +48,7 @@ namespace API.Application.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Manager")]
-        public  async Task<ActionResult> Post([FromBody] User user)
+        public  async Task<ActionResult> Post([FromBody] UserDto user)
         {
             try
             {
@@ -67,7 +67,7 @@ namespace API.Application.Controllers
 
         [HttpPut]
         [Authorize(Roles = "Manager")]
-        public async Task<ActionResult> Put([FromBody] User user)
+        public async Task<ActionResult> Put([FromBody] UserDto user)
         {
             try
             {
@@ -85,7 +85,7 @@ namespace API.Application.Controllers
 
         [HttpPatch]
         [Authorize(Roles = "Manager,Employee")]
-        public async Task<ActionResult> Patch([FromBody] User user)
+        public async Task<ActionResult> Patch([FromBody] UserDto user)
         {
             //verificar esta implementação
             await Task.Delay(500);

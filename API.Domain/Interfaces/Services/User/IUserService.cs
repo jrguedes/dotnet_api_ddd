@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using API.Domain.Entities;
+using API.Domain.Dtos.User;
 
 namespace API.Domain.Interfaces.Services
 {
@@ -9,12 +9,12 @@ namespace API.Domain.Interfaces.Services
     //podem ter outros métodos para atender a regra de negocio além dos verbos
     public interface IUserService
     {
-         Task<User> GetAsync(Guid id);
-         Task<IEnumerable<User>> GetAllAsync();
+         Task<UserDto> GetAsync(Guid id);
+         Task<IEnumerable<UserDto>> GetAllAsync();
 
-         Task<User> PostAsync(User user);
+         Task<UserDto> PostAsync(UserDto user);
 
-         Task<User> PutAsync(User user);         
+         Task<UserDto> PutAsync(UserDto user);         
 
          Task<bool> DeleteAsync(Guid id);
     }
