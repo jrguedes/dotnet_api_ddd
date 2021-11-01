@@ -87,7 +87,7 @@ namespace API.Application.Controllers
         [Authorize(Roles = "Manager,Employee")]
         public async Task<ActionResult> Patch([FromBody] UserDto user)
         {
-            //verificar esta implementação
+            //verificar esta implementação 
             await Task.Delay(500);
             return NoContent();
             /*

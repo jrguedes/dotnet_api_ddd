@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.CrossCutting.DependencyInjection;
+using API.CrossCutting.Mappings;
 using API.Domain.Interfaces.Services;
 using API.Domain.Security;
 using API.Service.Services;
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -34,6 +36,13 @@ namespace application
         public void ConfigureServices(IServiceCollection services)
         {
             ConfigureDIServices.ConfigureDI(services, Configuration);
+            
+            var config = new AutoMapper.MapperConfiguration(cfg =>{
+                cfg.AddProfile(new DtoToModelProfile());
+            });
+
+            IMapper mapper = config.CreateMapper();
+            services.AddSingleton(mapper);
 
             var signingConfiguration = new SigningConfiguration();
             services.AddSingleton(signingConfiguration);
