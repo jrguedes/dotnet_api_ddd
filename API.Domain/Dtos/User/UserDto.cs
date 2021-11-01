@@ -15,6 +15,8 @@ namespace API.Domain.Dtos.User
         [EmailAddress(ErrorMessage = "Email em formato inválido")]
         [StringLength(100, ErrorMessage = "Email deve ter no maximo {1} caracteres")]
         public string Email { get; set; }
+
+        public string Role { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }
