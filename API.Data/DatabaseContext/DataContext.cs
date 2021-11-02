@@ -1,5 +1,6 @@
 using System;
 using API.Data.Mapping;
+using API.Data.Seeds;
 using API.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,7 +18,12 @@ namespace API.Data.DatabaseContext
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+            
             builder.Entity<User>(new UserMap().Configure);
+            builder.Entity<Municipio>(new MunicipioMap().Configure);
+            builder.Entity<Endereco>(new EnderecoMap().Configure);
+            builder.Entity<UF>(new UFMap().Configure);
+
             builder.Entity<User>().HasData(
                 new User
                 {
@@ -29,6 +35,8 @@ namespace API.Data.DatabaseContext
                     Role = "Manager"
                 }                
             );
+            
+            UFSeeds.UFs(builder);
         }
 
     }
