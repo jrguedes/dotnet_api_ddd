@@ -38,8 +38,9 @@ namespace application
         public void ConfigureServices(IServiceCollection services)
         {
             ConfigureDIServices.ConfigureDI(services, Configuration);
-            
-            var config = new AutoMapper.MapperConfiguration(cfg =>{
+
+            var config = new AutoMapper.MapperConfiguration(cfg =>
+            {
                 cfg.AddProfile(new DtoToModelProfile());
             });
 
@@ -165,14 +166,14 @@ namespace application
             //APÓS A PRIMEIRA EXECUÇÃO DA API, ALTERAR A VARIAVEL DE AMBIENTE MIGRATION PARA 'NOTAPPLY'
             if (Environment.GetEnvironmentVariable("MIGRATION").ToLower() == "APPLY".ToLower())
             {
-               using(var service = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>()
-               .CreateScope())
-               {
-                 using(var context = service.ServiceProvider.GetService<DataContext>())  
-                 {
-                     context.Database.Migrate();
-                 }
-               }
+                using (var service = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>()
+                .CreateScope())
+                {
+                    using (var context = service.ServiceProvider.GetService<DataContext>())
+                    {
+                        context.Database.Migrate();
+                    }
+                }
             }
         }
     }
