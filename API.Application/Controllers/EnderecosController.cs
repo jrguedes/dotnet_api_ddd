@@ -1,8 +1,8 @@
 using System;
 using System.Net;
 using System.Threading.Tasks;
-using API.Domain.Dtos.Municipio;
-using API.Domain.Interfaces.Services.Municipio;
+using API.Domain.Dtos.Endereco;
+using API.Domain.Interfaces.Services.Endereco;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,28 +10,15 @@ namespace API.Application.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class MunicipiosController : ControllerBase
+    public class EnderecosController : ControllerBase
     {
-        private IMunicipioService _service;
+        private IEnderecoService _service;
 
-        public MunicipiosController(IMunicipioService service)
+        public EnderecosController(IEnderecoService service)
         {
             _service = service;
         }
 
-        [HttpGet]
-        [Authorize(Roles = "Manager,Employee")]
-        public async Task<ActionResult> Get()
-        {
-            try
-            {
-                return Ok(await _service.GetAllAsync());
-            }
-            catch (ArgumentException e)
-            {
-                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
-            }
-        }
 
         [HttpGet("{id}", Name = "GetById")]
         [Authorize(Roles = "Manager,Employee")]
@@ -48,13 +35,13 @@ namespace API.Application.Controllers
         }
 
 
-        [HttpGet("porCodIBGE/{codIBGE}")]
+        [HttpGet("porCEP/{cep}")]
         [Authorize(Roles = "Manager,Employee")]
-        public async Task<ActionResult> GetByIBGE(int codIBGE)
+        public async Task<ActionResult> GetByCEP(string cep)
         {
             try
             {
-                return Ok(await _service.GetByIBGEAsync(codIBGE));
+                return Ok(await _service.GetByCEPAsync(cep));
             }
             catch (ArgumentException e)
             {
@@ -64,11 +51,11 @@ namespace API.Application.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Manager")]
-        public async Task<ActionResult> Post([FromBody] MunicipioDto municipio)
+        public async Task<ActionResult> Post([FromBody] EnderecoDto endereco)
         {
             try
             {
-                var result = await _service.PostAsync(municipio);
+                var result = await _service.PostAsync(endereco);
                 if (result != null)
                 {
                     return Created(new Uri(Url.Link("GetById", new { id = result.Id })), result);
@@ -83,11 +70,11 @@ namespace API.Application.Controllers
 
         [HttpPut]
         [Authorize(Roles = "Manager")]
-        public async Task<ActionResult> Put([FromBody] MunicipioDto municipio)
+        public async Task<ActionResult> Put([FromBody] EnderecoDto endereco)
         {
             try
             {
-                var result = await _service.PutAsync(municipio);
+                var result = await _service.PutAsync(endereco);
                 if (result != null)
                 {
                     return Ok(result);
@@ -113,6 +100,5 @@ namespace API.Application.Controllers
                 return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
             }
         }
-
     }
 }
