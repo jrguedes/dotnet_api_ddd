@@ -10,6 +10,9 @@ using API.Domain.Security;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Configuration;
 using System;
+using API.Domain.Interfaces.Services.UF;
+using API.Domain.Interfaces.Services.Endereco;
+using API.Domain.Interfaces.Services.Municipio;
 
 namespace API.CrossCutting.DependencyInjection
 {
@@ -31,7 +34,15 @@ namespace API.CrossCutting.DependencyInjection
         
             services.AddScoped(typeof(IRepository<>), typeof(BaseRepository<>));
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUFRepository, UFRepository>();
+            services.AddScoped<IEnderecoRepository, EnderecoRepository>();
+            services.AddScoped<IMunicipioRepository, MunicipioRepository>();
+
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IUFService, UFService>();
+            services.AddTransient<IEnderecoService, EnderecoService>();
+            services.AddTransient<IMunicipioService, MunicipioService>();
+
             services.AddTransient<ILoginService, LoginService>();                        
         }
     }
