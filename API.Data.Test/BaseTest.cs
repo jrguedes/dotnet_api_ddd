@@ -14,7 +14,7 @@ namespace API.Data.Test
         }
     }
 
-    public class DbTest : IDisposable
+    public class DbTest //: IDisposable
     {
         private string dataBaseName = $"dbApiTest_{Guid.NewGuid().ToString().Replace("-", string.Empty)}";
         public ServiceProvider ServiceProvider { get; private set; }
@@ -34,13 +34,17 @@ namespace API.Data.Test
             }
         }
 
+        /*
         public void Dispose()
         {
+            
             using (var context = ServiceProvider.GetService<DataContext>())
             {
                 context.Database.EnsureDeleted(); //banco de dados eliminado
             }
-        }
+            
+        } 
+        */       
 
     }
 }
