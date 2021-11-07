@@ -32,7 +32,7 @@ namespace API.Application.Controllers
             }
         }
         
-        [HttpGet("{id}", Name = "GetById")]
+        [HttpGet("{id}", Name = "GetUserById")]
         [Authorize(Roles = "Manager,Employee")]
         public async Task<ActionResult> Get(Guid id)
         {
@@ -55,7 +55,7 @@ namespace API.Application.Controllers
                  var result = await _service.PostAsync(user);
                  if (result != null){
                      //Retorna no Header o link de acesso ao objeto
-                     return Created(new Uri(Url.Link("GetById", new {id = result.Id})), result);
+                     return Created(new Uri(Url.Link("GetUserById", new {id = result.Id})), result);
                  }
                  return  BadRequest();
             }

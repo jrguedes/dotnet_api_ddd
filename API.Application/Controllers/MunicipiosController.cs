@@ -33,7 +33,7 @@ namespace API.Application.Controllers
             }
         }
 
-        [HttpGet("{id}", Name = "GetById")]
+        [HttpGet("{id}", Name = "GetMunicipioById")]
         [Authorize(Roles = "Manager,Employee")]
         public async Task<ActionResult> Get(Guid id)
         {
@@ -71,7 +71,7 @@ namespace API.Application.Controllers
                 var result = await _service.PostAsync(municipio);
                 if (result != null)
                 {
-                    return Created(new Uri(Url.Link("GetById", new { id = result.Id })), result);
+                    return Created(new Uri(Url.Link("GetMunicipioById", new { id = result.Id })), result);
                 }
                 return BadRequest();
             }

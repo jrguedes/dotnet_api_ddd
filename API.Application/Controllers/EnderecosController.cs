@@ -20,7 +20,7 @@ namespace API.Application.Controllers
         }
 
 
-        [HttpGet("{id}", Name = "GetById")]
+        [HttpGet("{id}", Name = "GetEnderecoById")]
         [Authorize(Roles = "Manager,Employee")]
         public async Task<ActionResult> Get(Guid id)
         {
@@ -58,7 +58,7 @@ namespace API.Application.Controllers
                 var result = await _service.PostAsync(endereco);
                 if (result != null)
                 {
-                    return Created(new Uri(Url.Link("GetById", new { id = result.Id })), result);
+                    return Created(new Uri(Url.Link("GetEnderecoById", new { id = result.Id })), result);
                 }
                 return BadRequest();
             }
