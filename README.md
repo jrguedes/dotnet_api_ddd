@@ -1,1 +1,1 @@
-# dotnet_api_ddd
+# Dotnet example using Domain-driven Design (DDD) and Jwt Authentication 
